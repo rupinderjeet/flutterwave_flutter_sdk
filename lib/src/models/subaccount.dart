@@ -8,7 +8,7 @@ class SubAccount {
     required this.id,
     this.transactionSplitRatio,
     this.transactionChargeType,
-    this.transactionPercentage
+    this.transactionPercentage,
   });
 
   /// Converts this instance to json
@@ -17,7 +17,7 @@ class SubAccount {
       "id": this.id,
       "transaction_split_ratio": this.transactionSplitRatio,
       "transaction_charge_type": this.transactionChargeType,
-      "transaction_charge": this.transactionPercentage
+      "transaction_charge": this.transactionPercentage,
     };
   }
 }

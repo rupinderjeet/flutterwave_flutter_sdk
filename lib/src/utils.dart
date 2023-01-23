@@ -9,12 +9,12 @@ class Utils {
     return isTestMode ? _DEBUG_BASE_URL : _PROD_BASE_URL;
   }
 
-  static Map<String, dynamic> removeKeysWithEmptyValues(final Map<String, dynamic> map) {
-    final Map<String, dynamic> copied = Map.from(map);
-    map.forEach((key, value) {
-      if (map[key] == null || map[key] == "") copied
-          .remove(key);
-    });
-    return copied;
+  static Map<String, dynamic> removeKeysWithEmptyValues(
+    final Map<String, dynamic> map,
+  ) {
+    return Map.from(map)
+      ..removeWhere((key, value) {
+        return value == null || value == "";
+      });
   }
 }

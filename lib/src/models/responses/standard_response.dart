@@ -3,7 +3,11 @@ class StandardResponse {
   String? message;
   StandardResponseData? data;
 
-  StandardResponse({this.status, this.data, this.message});
+  StandardResponse({
+    this.status,
+    this.data,
+    this.message,
+  });
 
   StandardResponse.fromJson(Map<String, dynamic> json) {
     this.status = json["status"];
@@ -16,7 +20,7 @@ class StandardResponse {
     return {
       "status": this.status,
       "message": this.message,
-      "data": this.data?.toJson()
+      "data": this.data?.toJson(),
     };
   }
 }
@@ -33,7 +37,7 @@ class StandardResponseData {
   /// Converts this instance to json
   Map<String, dynamic> toJson() {
     return {
-      "link": this.link
+      "link": this.link,
     };
   }
 }

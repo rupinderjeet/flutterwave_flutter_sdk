@@ -5,14 +5,18 @@ class Customer {
   String phoneNumber;
   String name;
 
-  Customer({required this.name, required this.phoneNumber, required this.email});
+  Customer({
+    required this.name,
+    required this.phoneNumber,
+    required this.email,
+  });
 
   /// Converts instance of Customer to json
   Map<String, dynamic> toJson() {
-    final customer =  {
+    final customer = {
       "email": this.email,
       "phonenumber": this.phoneNumber,
-      "name": this.name
+      "name": this.name,
     };
     return Utils.removeKeysWithEmptyValues(customer);
   }

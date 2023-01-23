@@ -6,11 +6,16 @@ class ChargeResponse {
   String? transactionId;
   String? txRef;
 
-  ChargeResponse({this.status, this.success, this.transactionId, this.txRef});
+  ChargeResponse({
+    this.status,
+    this.success,
+    this.transactionId,
+    this.txRef,
+  });
 
   ChargeResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'] == null ? TransactionStatus.ERROR : json['status'];
-    success = json['success'] == null ? false : json['success'] ;
+    success = json['success'] == null ? false : json['success'];
     transactionId = json['transaction_id'];
     txRef = json['tx_ref'];
   }
@@ -28,4 +33,3 @@ class ChargeResponse {
   @override
   String toString() => toJson().toString();
 }
-

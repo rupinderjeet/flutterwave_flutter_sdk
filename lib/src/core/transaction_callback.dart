@@ -1,5 +1,5 @@
 abstract class TransactionCallback {
-  onTransactionSuccess(String id, String txRef);
-  onTransactionError();
-  onCancelled();
+  void onTransactionSuccess(String id, String txRef);
+  void onTransactionError();
+  void onCancelled();
 }

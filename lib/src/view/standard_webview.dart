@@ -42,27 +42,18 @@ class _StandardWebViewAppState extends State<StandardWebView> {
           initialUrl: widget.url,
           javascriptMode: JavascriptMode.unrestricted,
           gestureRecognizers: gestureRecognizers,
-          onPageStarted: _processUrl,
+          onPageStarted: _onPageStartedLoading,
         ),
       ),
     );
   }
 
-  _processUrl(String webUrl) {
+  void _onPageStartedLoading(String webUrl) {
     final uri = Uri.parse(webUrl);
     if (_checkHasAppendedWithResponse(uri)) {
       _finishWithAppendedResponse(uri);
     } else {
       _checkHasCompletedProcessing(uri);
-    }
-  }
-
-  _checkHasCompletedProcessing(final Uri uri) {
-    final status = uri.queryParameters["status"];
-    final txRef = uri.queryParameters["tx_ref"];
-    final id = uri.queryParameters["transaction_id"];
-    if (status != null && txRef != null) {
-      _finish(uri);
     }
   }
 
@@ -77,7 +68,7 @@ class _StandardWebViewAppState extends State<StandardWebView> {
     return false;
   }
 
-  _finishWithAppendedResponse(Uri uri) {
+  void _finishWithAppendedResponse(Uri uri) {
     final response = uri.queryParameters["response"];
     final decoded = Uri.decodeFull(response!);
     final json = jsonDecode(decoded);
@@ -94,7 +85,16 @@ class _StandardWebViewAppState extends State<StandardWebView> {
     Navigator.pop(context, chargeResponse);
   }
 
-  _finish(final Uri uri) {
+  void _checkHasCompletedProcessing(final Uri uri) {
+    final status = uri.queryParameters["status"];
+    final txRef = uri.queryParameters["tx_ref"];
+    final id = uri.queryParameters["transaction_id"];
+    if (status != null && txRef != null) {
+      _finish(uri);
+    }
+  }
+
+  void _finish(final Uri uri) {
     final status = uri.queryParameters["status"];
     final txRef = uri.queryParameters["tx_ref"];
     final id = uri.queryParameters["transaction_id"];
