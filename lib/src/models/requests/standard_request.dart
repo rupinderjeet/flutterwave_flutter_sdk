@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutterwave_standard/src/models/TransactionError.dart';
+import 'package:flutterwave_standard/src/models/transaction_error.dart';
 import 'package:flutterwave_standard/src/models/requests/customer.dart';
 import 'package:flutterwave_standard/src/models/requests/customizations.dart';
 import 'package:flutterwave_standard/src/models/responses/standard_response.dart';
