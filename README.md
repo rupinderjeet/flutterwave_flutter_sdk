@@ -6,7 +6,7 @@
 
 # Flutterwave Flutter SDK (Standard)
 
-The Flutter library helps you create seamless payment experiences in your dart mobile app. By connecting to our modal, you can start collecting payment in no time.
+The Flutter library helps you create seamless payment experiences in your dart mobile app. By connecting to our modal, you can start collecting payment in no time. See [Flutterwave Standard](https://developer.flutterwave.com/docs/collecting-payments/standard) documentation for more details on how this works.
 
 
 Available features include:
