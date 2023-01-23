@@ -5,7 +5,6 @@ import 'package:flutterwave_standard/models/requests/standard_request.dart';
 import 'package:flutterwave_standard/models/responses/charge_response.dart';
 import 'package:flutterwave_standard/models/responses/standard_response.dart';
 import 'package:flutterwave_standard/models/subaccount.dart';
-import 'package:flutterwave_standard/view/flutterwave_style.dart';
 import 'package:flutterwave_standard/view/standard_webview.dart';
 import 'package:flutterwave_standard/view/view_utils.dart';
 import 'package:http/http.dart';
@@ -24,23 +23,22 @@ class Flutterwave {
   String? paymentPlanId;
   List<SubAccount>? subAccounts;
   Map<dynamic, dynamic>? meta;
-  FlutterwaveStyle? style;
 
-  Flutterwave(
-      {required this.context,
-      required this.publicKey,
-      required this.txRef,
-      required this.amount,
-      required this.customer,
-      required this.paymentOptions,
-      required this.customization,
-      required this.redirectUrl,
-      required this.isTestMode,
-      this.currency,
-      this.paymentPlanId,
-      this.subAccounts,
-      this.meta,
-      this.style});
+  Flutterwave({
+    required this.context,
+    required this.publicKey,
+    required this.txRef,
+    required this.amount,
+    required this.customer,
+    required this.paymentOptions,
+    required this.customization,
+    required this.redirectUrl,
+    required this.isTestMode,
+    this.currency,
+    this.paymentPlanId,
+    this.subAccounts,
+    this.meta,
+  });
 
   /// Starts Standard Transaction
   Future<ChargeResponse> charge() async {

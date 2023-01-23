@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:io';
 
@@ -8,19 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:flutterwave_standard/models/responses/charge_response.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import 'flutterwave_style.dart';
-
 class StandardWebView extends StatefulWidget {
   final String url;
-  final FlutterwaveStyle? style;
-  const StandardWebView({required this.url, this.style});
+
+  const StandardWebView({
+    required this.url,
+  });
 
   @override
   State<StandardWebView> createState() => _StandardWebViewAppState();
 }
 
 class _StandardWebViewAppState extends State<StandardWebView> {
-
   @override
   void initState() {
     if (Platform.isAndroid) {
@@ -31,41 +29,27 @@ class _StandardWebViewAppState extends State<StandardWebView> {
 
   @override
   Widget build(BuildContext context) {
-
     final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers = {
       Factory(() => EagerGestureRecognizer())
     };
 
     UniqueKey _key = UniqueKey();
 
-    AppBar? appBar;
-    if (widget.style != null) {
-      appBar = AppBar(
-        title: Text(
-          widget.style!.getAppBarText(),
-          style: widget.style!.getAppBarTextStyle(),
+    return SafeArea(
+      child: Scaffold(
+        key: _key,
+        body: WebView(
+          initialUrl: widget.url,
+          javascriptMode: JavascriptMode.unrestricted,
+          gestureRecognizers: gestureRecognizers,
+          onPageStarted: _processUrl,
         ),
-      );
-    }
-
-      return SafeArea(
-          child: Scaffold(
-            key: _key,
-            appBar: appBar,
-            body: WebView(
-              initialUrl: widget.url,
-              javascriptMode:  JavascriptMode.unrestricted,
-              gestureRecognizers: gestureRecognizers,
-              onPageStarted: (webUrl) {
-                final url = Uri.parse(webUrl);
-                _processUrl(url);
-              },
-            ),
-          )
-      );
+      ),
+    );
   }
 
-  _processUrl(Uri uri) {
+  _processUrl(String webUrl) {
+    final uri = Uri.parse(webUrl);
     if (_checkHasAppendedWithResponse(uri)) {
       _finishWithAppendedResponse(uri);
     } else {
@@ -102,10 +86,10 @@ class _StandardWebViewAppState extends State<StandardWebView> {
     final id = json["id"];
 
     final ChargeResponse chargeResponse = ChargeResponse(
-        status: status,
-        transactionId: "$id",
-        txRef: txRef,
-        success: status?.contains("success") == true
+      status: status,
+      transactionId: "$id",
+      txRef: txRef,
+      success: status?.contains("success") == true,
     );
     Navigator.pop(context, chargeResponse);
   }
@@ -118,7 +102,7 @@ class _StandardWebViewAppState extends State<StandardWebView> {
       status: status,
       transactionId: id,
       txRef: txRef,
-      success: status?.contains("success") == true
+      success: status?.contains("success") == true,
     );
     Navigator.pop(context, chargeResponse);
   }
