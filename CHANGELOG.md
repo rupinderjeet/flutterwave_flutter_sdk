@@ -1,4 +1,5 @@
 ## [BREAKING CHANGES] UNKNOWN - UNRELEASED
+* removes dependency on `fluttertoast: ^8.0.8`
 * removes redundant dependency on `modal_bottom_sheet: ^2.1.0`
 * code-refactoring
 * updates min-sdk version to 2.13.0

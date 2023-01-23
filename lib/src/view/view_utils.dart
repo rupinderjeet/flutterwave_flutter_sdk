@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 // TODO: use named fields
 class FlutterwaveViewUtils {
@@ -118,23 +117,6 @@ class FlutterwaveViewUtils {
             : handleBackPress(),
       ),
       title: Text(title, style: appBarTitleTextStyle),
-    );
-  }
-
-  /// Displays a Snackbar
-  static showSnackBar(BuildContext context, String text) {
-    final snackBar = SnackBar(content: Text(text));
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
-
-
-  /// Displays a toast notification
-  static void showToast(BuildContext context, String text) {
-    Fluttertoast.showToast(
-        msg: text,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Color(0xAA383737),
-        textColor: Colors.white,
     );
   }
 }
