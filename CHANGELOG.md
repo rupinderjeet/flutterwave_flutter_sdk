@@ -1,4 +1,5 @@
-## [BREAKING CHANGES] UNKNOWN - UNRELEASED
+## [2.x.x] - UNRELEASED with BREAKING-CHANGES
+* removes redundant view-utils
 * removes dependency on `fluttertoast: ^8.0.8`
 * removes redundant dependency on `modal_bottom_sheet: ^2.1.0`
 * code-refactoring
