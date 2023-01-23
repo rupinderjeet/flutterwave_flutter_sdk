@@ -1,3 +1,9 @@
+## [BREAKING CHANGES] UNKNOWN - UNRELEASED
+* removes redundant dependency on `modal_bottom_sheet: ^2.1.0`
+* code-refactoring
+* updates min-sdk version to 2.13.0
+* hides internal API
+
 ## [1.0.6] - October, 2022
 * Fixed bug where transaction gets stuck after redirecting on webview
 * Fixed iOS build bug by removing inAppBrowser library
