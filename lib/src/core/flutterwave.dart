@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutterwave_standard/models/requests/customer.dart';
-import 'package:flutterwave_standard/models/requests/customizations.dart';
-import 'package:flutterwave_standard/models/requests/standard_request.dart';
-import 'package:flutterwave_standard/models/responses/charge_response.dart';
-import 'package:flutterwave_standard/models/responses/standard_response.dart';
-import 'package:flutterwave_standard/models/subaccount.dart';
-import 'package:flutterwave_standard/view/standard_webview.dart';
-import 'package:flutterwave_standard/view/view_utils.dart';
+import 'package:flutterwave_standard/src/models/requests/customer.dart';
+import 'package:flutterwave_standard/src/models/requests/customizations.dart';
+import 'package:flutterwave_standard/src/models/requests/standard_request.dart';
+import 'package:flutterwave_standard/src/models/responses/charge_response.dart';
+import 'package:flutterwave_standard/src/models/responses/standard_response.dart';
+import 'package:flutterwave_standard/src/models/subaccount.dart';
+import 'package:flutterwave_standard/src/view/standard_webview.dart';
+import 'package:flutterwave_standard/src/view/view_utils.dart';
 import 'package:http/http.dart';
 
 class Flutterwave {

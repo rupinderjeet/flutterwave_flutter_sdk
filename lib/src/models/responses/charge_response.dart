@@ -1,5 +1,4 @@
-
-import 'package:flutterwave_standard/core/transaction_status.dart';
+import 'package:flutterwave_standard/src/core/transaction_status.dart';
 
 class ChargeResponse {
   String? status;

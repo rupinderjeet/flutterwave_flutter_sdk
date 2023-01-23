@@ -1,4 +1,4 @@
-import 'package:flutterwave_standard/utils.dart';
+import 'package:flutterwave_standard/src/utils.dart';
 
 class Customization {
   String? title;

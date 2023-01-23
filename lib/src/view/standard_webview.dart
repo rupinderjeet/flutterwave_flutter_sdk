@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterwave_standard/models/responses/charge_response.dart';
+import 'package:flutterwave_standard/src/models/responses/charge_response.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class StandardWebView extends StatefulWidget {

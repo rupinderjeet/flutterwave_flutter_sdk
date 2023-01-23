@@ -1,4 +1,4 @@
-import '../../utils.dart';
+import 'package:flutterwave_standard/src/utils.dart';
 
 class Customer {
   String email;

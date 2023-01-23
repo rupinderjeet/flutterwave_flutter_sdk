@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutterwave_standard/models/TransactionError.dart';
-import 'package:flutterwave_standard/models/requests/customer.dart';
-import 'package:flutterwave_standard/models/requests/customizations.dart';
-import 'package:flutterwave_standard/models/responses/standard_response.dart';
-import 'package:flutterwave_standard/models/subaccount.dart';
-import 'package:flutterwave_standard/utils.dart';
+import 'package:flutterwave_standard/src/models/TransactionError.dart';
+import 'package:flutterwave_standard/src/models/requests/customer.dart';
+import 'package:flutterwave_standard/src/models/requests/customizations.dart';
+import 'package:flutterwave_standard/src/models/responses/standard_response.dart';
+import 'package:flutterwave_standard/src/models/subaccount.dart';
+import 'package:flutterwave_standard/src/utils.dart';
 import 'package:http/http.dart';
 
 class StandardRequest {

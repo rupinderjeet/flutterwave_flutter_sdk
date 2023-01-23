@@ -1,6 +1,6 @@
 library flutterwave;
 
-export './core/flutterwave.dart';
-export './models/requests/customer.dart';
-export './models/requests/customizations.dart';
-export './models/responses/charge_response.dart';
+export 'src/core/flutterwave.dart';
+export 'src/models/requests/customer.dart';
+export 'src/models/requests/customizations.dart';
+export 'src/models/responses/charge_response.dart';

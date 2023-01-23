@@ -1,4 +1,3 @@
-
 class SubAccount {
   String id;
   int? transactionSplitRatio;
