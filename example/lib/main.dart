@@ -191,7 +191,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final ChargeResponse response = await flutterwave.charge();
     if (response != null) {
       this.showLoading(response.toString());
-      print("${response.toJson()}");
+      print("response: $response");
     } else {
       this.showLoading("No Response!");
     }

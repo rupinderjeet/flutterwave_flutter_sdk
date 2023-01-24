@@ -65,19 +65,18 @@ class Flutterwave {
         print('flw:charge_failed: $error');
       }
 
-      return ChargeResponse(
-          txRef: request.txRef, status: "error", success: false);
+      return ChargeResponse.error(txRef: request.txRef);
     }
 
     // Check response status for errors
+    // TODO: this case is handled by try-catch, so might be redundant.
     if (standardResponse.status == "error") {
       if (isTestMode) {
         print('flw:charge_failed: Status Error. '
             'message: ${standardResponse.message}');
       }
 
-      return ChargeResponse(
-          txRef: request.txRef, status: "error", success: false);
+      return ChargeResponse.error(txRef: request.txRef);
     }
 
     // Validate payment-url from response
@@ -89,37 +88,35 @@ class Flutterwave {
             'Please check that you generated a new tx_ref.');
       }
 
-      return ChargeResponse(
-          txRef: request.txRef, status: "error", success: false);
+      return ChargeResponse.error(txRef: request.txRef);
     }
 
     // Open Payment URL in a WebView and wait for result
-    final transactionResult = await Navigator.push(
+    final chargeResponse = await Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => StandardWebView(url: paymentUrl)),
     );
 
-    // Validate Transaction Result
-    if (transactionResult == null) {
+    // Validate response
+    if (chargeResponse == null) {
       if (isTestMode) {
-        print('flw:charge_failed: Transaction Result is null. '
+        print('flw:charge_failed: Charge Response is null. '
             'This might be user-initiated cancellation.');
       }
 
-      return ChargeResponse(
-          txRef: request.txRef, status: "cancelled", success: false);
+      return ChargeResponse.cancelled(txRef: request.txRef);
     }
 
-    // TODO: verify if this can be replaced with something like `if (X is Y)`
-    if (transactionResult.runtimeType != ChargeResponse().runtimeType) {
+    // https://stackoverflow.com/questions/73907763
+    // if (chargeResponse.runtimeType != ChargeResponse().runtimeType) {
+    if (chargeResponse is ChargeResponse) {
       if (isTestMode) {
         print('flw:charge_failed: Invalid Transaction Result.');
       }
 
-      return ChargeResponse(
-          txRef: request.txRef, status: "cancelled", success: false);
+      return ChargeResponse.cancelled(txRef: request.txRef);
     }
 
-    return transactionResult;
+    return chargeResponse;
   }
 }

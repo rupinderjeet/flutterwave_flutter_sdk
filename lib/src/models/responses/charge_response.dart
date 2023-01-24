@@ -1,35 +1,30 @@
-import 'package:flutterwave_standard/src/core/transaction_status.dart';
-
 class ChargeResponse {
-  String? status;
-  bool? success;
+  String status;
   String? transactionId;
-  String? txRef;
+  String txRef;
 
   ChargeResponse({
-    this.status,
-    this.success,
+    required this.status,
     this.transactionId,
-    this.txRef,
+    required this.txRef,
   });
 
-  ChargeResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'] == null ? TransactionStatus.ERROR : json['status'];
-    success = json['success'] == null ? false : json['success'];
-    transactionId = json['transaction_id'];
-    txRef = json['tx_ref'];
-  }
+  ChargeResponse.cancelled({
+    required String txRef,
+  }) : this(status: "cancelled", txRef: txRef);
 
-  /// Converts this instance to json
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['success'] = this.success;
-    data['transaction_id'] = this.transactionId;
-    data['tx_ref'] = this.txRef;
-    return data;
-  }
+  ChargeResponse.error({
+    required String txRef,
+  }) : this(status: "error", txRef: txRef);
+
+  bool get success => status.contains("success") == true;
 
   @override
-  String toString() => toJson().toString();
+  String toString() {
+    return "ChargeResponse["
+        "status:$status, "
+        "transactionId:$transactionId, "
+        "transactionRef:$txRef, "
+        "]";
+  }
 }
