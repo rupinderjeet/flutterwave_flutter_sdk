@@ -2,13 +2,13 @@ import 'package:flutterwave_standard/src/utils.dart';
 
 class Customer {
   String email;
-  String phoneNumber;
-  String name;
+  String? name;
+  String? phoneNumber;
 
   Customer({
-    required this.name,
-    required this.phoneNumber,
     required this.email,
+    this.name,
+    this.phoneNumber,
   });
 
   /// Converts instance of Customer to json
