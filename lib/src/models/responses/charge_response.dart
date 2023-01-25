@@ -21,10 +21,10 @@ class ChargeResponse {
 
   @override
   String toString() {
-    return "ChargeResponse["
-        "status:$status, "
-        "transactionId:$transactionId, "
-        "transactionRef:$txRef, "
+    return "ChargeResponse[\n"
+        "\tstatus:$status, \n"
+        "\ttransactionId:$transactionId, \n"
+        "\ttransactionRef:$txRef, \n"
         "]";
   }
 }
