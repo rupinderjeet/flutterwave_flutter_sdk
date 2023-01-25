@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -19,11 +18,20 @@ class StandardWebView extends StatefulWidget {
 }
 
 class _StandardWebViewAppState extends State<StandardWebView> {
+  late WebViewController _controller;
+
   @override
   void initState() {
-    if (Platform.isAndroid) {
-      WebView.platform = SurfaceAndroidWebView();
-    }
+    _controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onPageStarted: _onPageStartedLoading,
+        ),
+      )
+      ..loadRequest(Uri.parse(widget.url));
+
     super.initState();
   }
 
@@ -38,12 +46,7 @@ class _StandardWebViewAppState extends State<StandardWebView> {
     return SafeArea(
       child: Scaffold(
         key: _key,
-        body: WebView(
-          initialUrl: widget.url,
-          javascriptMode: JavascriptMode.unrestricted,
-          gestureRecognizers: gestureRecognizers,
-          onPageStarted: _onPageStartedLoading,
-        ),
+        body: WebViewWidget(controller: _controller, gestureRecognizers: gestureRecognizers),
       ),
     );
   }

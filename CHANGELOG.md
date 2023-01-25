@@ -1,4 +1,5 @@
 ## [2.x.x] - UNRELEASED with BREAKING-CHANGES
+* updates `webview_flutter` dependency (3.0.4 -> 4.0.2)
 * removes redundant view-utils
 * removes dependency on `fluttertoast: ^8.0.8`
 * removes redundant dependency on `modal_bottom_sheet: ^2.1.0`
