@@ -10,14 +10,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      home: MyHomePage(title: 'Flutterwave Standard'),
       title: 'Flutter Standard Demo',
-      home: MyHomePage('Flutterwave Standard'),
+      themeMode: ThemeMode.system,
+      darkTheme: ThemeData.dark(useMaterial3: true),
+      theme: ThemeData.light(useMaterial3: true),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage(this.title);
+  const MyHomePage({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
 
   final String title;
 
@@ -26,23 +32,41 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final formKey = GlobalKey<FormState>();
-  final amountController = TextEditingController();
-  final currencyController = TextEditingController();
-  final narrationController = TextEditingController();
-  final publicKeyController = TextEditingController();
-  final encryptionKeyController = TextEditingController();
-  final emailController = TextEditingController();
-  final phoneNumberController = TextEditingController();
+  late GlobalKey<FormState> formKey;
 
-  String selectedCurrency = "";
+  late TextEditingController amountController;
+  late TextEditingController currencyController;
+  late TextEditingController narrationController;
+  late TextEditingController publicKeyController;
+  late TextEditingController encryptionKeyController;
+  late TextEditingController emailController;
+  late TextEditingController phoneNumberController;
 
-  bool isTestMode = true;
+  late bool isTesting;
+
+  @override
+  void initState() {
+    super.initState();
+
+    formKey = GlobalKey<FormState>();
+
+    amountController = TextEditingController();
+    currencyController = TextEditingController();
+    narrationController = TextEditingController();
+    publicKeyController = TextEditingController();
+    encryptionKeyController = TextEditingController();
+    emailController = TextEditingController();
+    phoneNumberController = TextEditingController();
+
+    isTesting = true;
+
+    emailController.text = "customer@customer.com";
+    currencyController.text = "";
+    publicKeyController.text = isTesting ? "YOUR_TEST_KEY" : "YOUR_LIVE_KEY";
+  }
 
   @override
   Widget build(BuildContext context) {
-    this.currencyController.text = this.selectedCurrency;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -51,214 +75,210 @@ class _MyHomePageState extends State<MyHomePage> {
         width: double.infinity,
         margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
         child: Form(
-          key: this.formKey,
-          child: ListView(
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 20, 0, 10),
-                child: TextFormField(
-                  controller: this.amountController,
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.number,
-                  style: TextStyle(color: Colors.black),
-                  decoration: InputDecoration(hintText: "Amount"),
-                  validator: (value) =>
-                      value.isNotEmpty ? null : "Amount is required",
-                ),
+          key: formKey,
+          child: ListView(children: <Widget>[
+            // AMOUNT
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 20, 0, 10),
+              child: TextFormField(
+                controller: amountController,
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(hintText: "Amount"),
+                validator: _validateFieldForRequirement,
               ),
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 20, 0, 10),
-                child: TextFormField(
-                  controller: this.currencyController,
-                  textInputAction: TextInputAction.next,
-                  style: TextStyle(color: Colors.black),
-                  readOnly: true,
-                  onTap: this._openBottomSheet,
-                  decoration: InputDecoration(
-                    hintText: "Currency",
-                  ),
-                  validator: (value) =>
-                      value.isNotEmpty ? null : "Currency is required",
-                ),
+            ),
+
+            // CURRENCY
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 20, 0, 10),
+              child: TextFormField(
+                controller: currencyController,
+                textInputAction: TextInputAction.next,
+                readOnly: true,
+                onTap: _showCurrencySelectionBottomSheet,
+                decoration: InputDecoration(hintText: "Currency"),
+                validator: _validateFieldForRequirement,
               ),
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 20, 0, 10),
-                child: TextFormField(
-                  controller: this.publicKeyController,
-                  textInputAction: TextInputAction.next,
-                  style: TextStyle(color: Colors.black),
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: "Public Key",
-                  ),
-                ),
+            ),
+
+            // PUBLIC KEY
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 20, 0, 10),
+              child: TextFormField(
+                controller: publicKeyController,
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(hintText: "Public Key"),
+                validator: _validateFieldForRequirement,
               ),
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 20, 0, 10),
-                child: TextFormField(
-                  controller: this.encryptionKeyController,
-                  textInputAction: TextInputAction.next,
-                  style: TextStyle(color: Colors.black),
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: "Encryption Key",
-                  ),
-                ),
+            ),
+
+            // ENCRYPTION KEY
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 20, 0, 10),
+              child: TextFormField(
+                controller: encryptionKeyController,
+                textInputAction: TextInputAction.next,
+                obscureText: true,
+                decoration: InputDecoration(hintText: "Encryption Key"),
               ),
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 20, 0, 10),
-                child: TextFormField(
-                  controller: this.emailController,
-                  textInputAction: TextInputAction.next,
-                  style: TextStyle(color: Colors.black),
-                  decoration: InputDecoration(
-                    hintText: "Email",
-                  ),
-                ),
+            ),
+
+            // EMAIL
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 20, 0, 10),
+              child: TextFormField(
+                controller: emailController,
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(hintText: "Email"),
+                validator: _validateFieldForRequirement,
               ),
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 20, 0, 10),
-                child: TextFormField(
-                  controller: this.phoneNumberController,
-                  textInputAction: TextInputAction.next,
-                  style: TextStyle(color: Colors.black),
-                  decoration: InputDecoration(
-                    hintText: "Phone Number",
-                  ),
-                ),
+            ),
+
+            // PHONE NUMBER
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 20, 0, 10),
+              child: TextFormField(
+                controller: phoneNumberController,
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(hintText: "Phone Number"),
               ),
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.fromLTRB(0, 20, 0, 10),
-                child: Row(
-                  children: [
-                    Text("Use Debug"),
-                    Switch(
-                      onChanged: (value) => {
-                        setState(() {
-                          isTestMode = value;
-                        })
-                      },
-                      value: this.isTestMode,
-                    ),
-                  ],
+            ),
+
+            // IS TESTING
+            Container(
+              width: double.infinity,
+              margin: EdgeInsets.fromLTRB(0, 20, 0, 10),
+              child: Row(children: [
+                Text("Use Debug"),
+                Switch(
+                  value: isTesting,
+                  onChanged: _updateIsTesting,
                 ),
+              ]),
+            ),
+
+            // MAKE PAYMENT
+            Container(
+              width: double.infinity,
+              height: 50,
+              margin: EdgeInsets.fromLTRB(0, 20, 0, 10),
+              child: ElevatedButton(
+                onPressed: _onMakePaymentTap,
+                child: Text("Make Payment"),
               ),
-              Container(
-                width: double.infinity,
-                height: 50,
-                margin: EdgeInsets.fromLTRB(0, 20, 0, 10),
-                child: ElevatedButton(
-                  onPressed: this._onPressed,
-                  child: Text(
-                    "Make Payment",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              )
-            ],
-          ),
+            )
+          ]),
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 
-  _onPressed() {
-    if (this.formKey.currentState.validate()) {
-      this._handlePaymentInitialization();
+  String? _validateFieldForRequirement(value, {String label = "This field"}) {
+    if (value == null || value.trim().isEmpty) {
+      return "$label is required";
     }
+
+    return null;
   }
 
-  _handlePaymentInitialization() async {
-    final Customer customer = Customer(
-        name: "FLW Developer",
-        phoneNumber: this.phoneNumberController.text ?? "12345678",
-        email: "customer@customer.com");
+  void _updateIsTesting(bool isTesting) {
+    setState(() {
+      this.isTesting = isTesting;
+    });
+  }
 
-    final Flutterwave flutterwave = Flutterwave(
+  void _onMakePaymentTap() async {
+    final formState = formKey.currentState;
+    if (formState == null) return;
+    if (!formState.validate()) return;
+
+    final customer = Customer(
+      name: "FLW Developer", // TODO: should be an input
+      phoneNumber: phoneNumberController.text,
+      email: emailController.text,
+    );
+
+    final amount = amountController.text.trim();
+    final currency = currencyController.text.trim();
+    final publicKey = publicKeyController.text.trim();
+
+    final flutterwave = Flutterwave(
         context: context,
-        publicKey: this.publicKeyController.text.trim().isEmpty
-            ? this.getPublicKey()
-            : this.publicKeyController.text.trim(),
-        currency: this.selectedCurrency,
+        publicKey: publicKey,
+        currency: currency,
         redirectUrl: 'https://facebook.com',
         txRef: Uuid().v1(),
-        amount: this.amountController.text.toString().trim(),
+        amount: amount,
         customer: customer,
         paymentOptions: "card, payattitude, barter, bank transfer, ussd",
         customization: Customization(title: "Test Payment"),
-        isTestMode: this.isTestMode);
-    final ChargeResponse response = await flutterwave.charge();
-    if (response != null) {
-      this.showLoading(response.toString());
-      print("response: $response");
-    } else {
-      this.showLoading("No Response!");
-    }
+        isTestMode: isTesting);
+
+    final response = await flutterwave.charge();
+    print("response: $response");
+    _showMessageDialog("$response\n\nCheck logs for more details.");
   }
 
-  String getPublicKey() {
-    if (isTestMode) return "FLWPUBK_TEST--X";
-    return "FLWPUBK--X";
-  }
-
-  void _openBottomSheet() {
+  void _showCurrencySelectionBottomSheet() {
     showModalBottomSheet(
-        context: this.context,
+        context: context,
         builder: (context) {
-          return this._getCurrency();
+          return _CurrencySelectionWidget(
+            currencies: ["NGN", "RWF", "UGX", "KES", "ZAR", "USD", "GHS", "TZS"],
+            onCurrencyTap: _handleCurrencyTap,
+          );
         });
   }
 
-  Widget _getCurrency() {
-    final currencies = ["NGN", "RWF", "UGX", "KES", "ZAR", "USD", "GHS", "TZS"];
+  void _handleCurrencyTap(String currency) {
+    setState(() {
+      currencyController.text = currency;
+    });
+    Navigator.pop(context);
+  }
+
+  void _showMessageDialog(String message) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: SingleChildScrollView(
+              child: Container(
+                width: double.infinity,
+                child: Text(message),
+              ),
+            ),
+          );
+        });
+  }
+}
+
+class _CurrencySelectionWidget extends StatelessWidget {
+  const _CurrencySelectionWidget({
+    Key? key,
+    required this.currencies,
+    required this.onCurrencyTap,
+  }) : super(key: key);
+
+  final List<String> currencies;
+  final Function(String) onCurrencyTap;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       height: 250,
-      margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-      color: Colors.white,
-      child: ListView(
-        children: currencies
-            .map((currency) => ListTile(
-                  onTap: () => {this._handleCurrencyTap(currency)},
-                  title: Column(
-                    children: [
-                      Text(
-                        currency,
-                        textAlign: TextAlign.start,
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      SizedBox(height: 4),
-                      Divider(height: 1)
-                    ],
-                  ),
-                ))
-            .toList(),
-      ),
-    );
-  }
-
-  _handleCurrencyTap(String currency) {
-    this.setState(() {
-      this.selectedCurrency = currency;
-      this.currencyController.text = currency;
-    });
-    Navigator.pop(this.context);
-  }
-
-  Future<void> showLoading(String message) {
-    return showDialog(
-      context: this.context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: Container(
-            margin: EdgeInsets.fromLTRB(30, 20, 30, 20),
-            width: double.infinity,
-            height: 50,
-            child: Text(message),
-          ),
-        );
-      },
+      margin: EdgeInsets.only(top: 10),
+      child: ListView.builder(
+          itemCount: currencies.length,
+          itemBuilder: (_, index) {
+            final currency = currencies[index];
+            return ListTile(
+              onTap: () => onCurrencyTap(currency),
+              title: Text(currency, textAlign: TextAlign.start),
+            );
+          }),
     );
   }
 }
