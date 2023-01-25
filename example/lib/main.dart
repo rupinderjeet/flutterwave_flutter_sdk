@@ -62,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     emailController.text = "customer@customer.com";
     currencyController.text = "";
-    publicKeyController.text = isTesting ? "YOUR_TEST_KEY" : "YOUR_LIVE_KEY";
+    publicKeyController.text = isTesting ? "YOUR_PUBLIC_TEST_KEY" : "YOUR_PUBLIC_LIVE_KEY";
   }
 
   @override
@@ -241,7 +241,6 @@ class _MyHomePageState extends State<MyHomePage> {
   void _showMessageDialog(String message) {
     showDialog(
         context: context,
-        barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
             content: SingleChildScrollView(
