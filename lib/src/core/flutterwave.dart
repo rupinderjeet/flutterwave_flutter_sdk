@@ -109,9 +109,9 @@ class Flutterwave {
 
     // https://stackoverflow.com/questions/73907763
     // if (chargeResponse.runtimeType != ChargeResponse().runtimeType) {
-    if (chargeResponse is ChargeResponse) {
+    if (chargeResponse is! ChargeResponse) {
       if (isTestMode) {
-        print('flw:charge_failed: Invalid Transaction Result.');
+        print('flw:charge_failed: Invalid Charge Response.');
       }
 
       return ChargeResponse.cancelled(txRef: request.txRef);
