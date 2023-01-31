@@ -18,7 +18,19 @@ class Flutterwave {
   String publicKey;
   String paymentOptions;
   String redirectUrl;
-  String? currency;
+
+  /// An ISO-4217 representation of currency
+  /// e.g. INR, USD, NGN, etc.
+  ///
+  /// This field is said to be optional in flutterwave-standard documentation
+  /// (they assume NGN as currency by default).
+  /// But, a recent conversation with development-team on their slack channel
+  /// has revealed that it is required when using flutter-sdk.
+  ///
+  /// Flutterwave-standard documentation: https://developer.flutterwave.com/docs/collecting-payments/standard/
+  /// Related discussion on slack: https://flutterwavedevelopers.slack.com/archives/C695V58RL/p1674806015986409
+  String currency;
+
   String? paymentPlanId;
   List<SubAccount>? subAccounts;
   Map<dynamic, dynamic>? meta;
@@ -33,7 +45,7 @@ class Flutterwave {
     required this.customization,
     required this.redirectUrl,
     required this.isTestMode,
-    this.currency,
+    required this.currency,
     this.paymentPlanId,
     this.subAccounts,
     this.meta,
